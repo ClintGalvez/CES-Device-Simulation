@@ -1,1 +1,20 @@
-# 3004-Team-51
+# COMP 3004-A: Team 51 Project
+
+`Members:`
+`Jacob Boruszkowski`
+`Cint Galvez`
+`Nicolas Dusablon`
+`Arti Patel`
+
+## Roles
+- something...
+
+## File Organization of The Deliverables
+- something...
+
+## Tested Scenarios
+### Working
+- something...
+
+### Non-Working
+- something...
