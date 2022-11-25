@@ -1,10 +1,8 @@
 # COMP 3004-A: Team 51 Project
-
-`Members:`
-`Jacob Boruszkowski`
-`Cint Galvez`
-`Nicolas Dusablon`
-`Arti Patel`
+```JS
+TA: Fazlay Rabbi
+Members: Jacob Boruszkowski, Cint Galvez, Nicolas Dusablon, Arti Patel
+```
 
 ## Roles
 - something...
