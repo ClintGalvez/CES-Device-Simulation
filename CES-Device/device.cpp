@@ -72,6 +72,16 @@ void Device::setPowerOn(bool on)
 void Device::setBattery(int batt)
 {
     battery = batt;
+
+    if (battery <= 0)
+    {
+        battery = 0;
+
+        if (powerOn)
+        {
+            softOff();
+        }
+    }
 }
 
 void Device::setConnection(int c)
@@ -166,31 +176,74 @@ void Device::createSession()
 }
 
 
-void Device::runSession(Session *ses)
+void Device::runSession()
 {
-    // set run timer for session duration (for now I just set all session durations to 4 seconds <-- temporary)
+    // set run timer for session duration
+    delete runTimer;
     runTimer = new QTimer(this);
     connect(runTimer, SIGNAL(timeout()), this, SLOT(endSession()));
-    runTimer->start(4000);
+    switch (sessGroup)
+    {
+        case TWENTY_MINUTES:
+            runTimer->start(10000);
+            break;
+        case FOURTY_FIVE_MINUTES:
+            runTimer->start(20000);
+            break;
+        case USER_DESIGNATED:
+            runTimer->start(60000);
+            break;
+        default:
+            break;
+    }
 
     // set battery timer for continous battery reduction every 2 seconds
     battTimer = new QTimer(this);
     connect(battTimer, SIGNAL(timeout()), this, SLOT(reduceBattery()));
     battTimer->start(2000);
+
+    if (connection == NONE)
+    {
+        cout << "no connection detected, waiting for a connection before starting session" << endl;
+        pauseSession();
+    }
+}
+
+void Device::pauseSession()
+{
+    runTimer->stop();
+    battTimer->stop();
+}
+
+void Device::continueSession()
+{
+    runTimer->start();
+    battTimer->start();
 }
 
 void Device::reduceBattery()
 {
-    // prob find a bettery reduction algorithm, but prob no need to
-    // *project specs say to include skin connection into this algorithm somehow (??)
-    battery -= 2 * currSession->getIntensity() + connection;
+    battery -= (currSession->getIntensity() + connection) * 0.2;
     emit batteryReduced();
+
+    if (battery <= 0)
+    {
+        battery = 0;
+
+        if (powerOn)
+        {
+            softOff();
+        }
+    }
 }
 
 void Device::endSession()
 {
     delete runTimer;
     delete battTimer;
+
+    runTimer = new QTimer(this);
+    battTimer = new QTimer(this);
 
     // end of session should have the intensity level go down each level until nothing is outputted
     // *note* look through project docs to see if additional things need to be added
@@ -207,8 +260,10 @@ void Device::updateHistory(Session *ses)
 void Device::softOff()
 {
     // gradually reduce CES stimulus (ie. intensity)
+    delete runTimer;
+    delete battTimer;
 
     // turn off
-    // swap to offScreen and clear batteryDisplay
     powerOn = false;
+    emit powerSoftOff();
 }

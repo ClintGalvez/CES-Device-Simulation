@@ -2,12 +2,15 @@
 #define DEVICE_H
 
 #include <QObject>
+#include <iostream>
 #include <QList>
 #include <QTimer>
 
 #include "defs.h"
 #include "user.h"
 #include "session.h"
+
+using namespace std;
 
 class Device : public QObject
 {
@@ -37,7 +40,9 @@ class Device : public QObject
         void addUser();
 
         void createSession();
-        void runSession(Session *);
+        void runSession();
+        void pauseSession();
+        void continueSession();
         void updateHistory(Session *);
 
         void softOff();
@@ -61,6 +66,7 @@ class Device : public QObject
 
     signals:
         void batteryReduced();
+        void powerSoftOff();
         void sessionFinished();
 
     public slots:

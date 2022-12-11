@@ -2,9 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QListWidget>
-
 #include <iostream>
+#include <QListWidget>
 #include <QTimer>
 #include <QRandomGenerator>
 
@@ -39,6 +38,8 @@ class MainWindow : public QMainWindow
         void selectType();
         void selectHistory();
 
+        void setSessionInfo();
+
         void resetCurrentRows();
 
         void updateHistory();
@@ -69,6 +70,9 @@ class MainWindow : public QMainWindow
         void history();
         void select();
         void togglePower();
+
+        void softOff();
+        void softOffComplete();
 
         void sessionFinished();
 

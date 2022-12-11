@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete timer;
 }
 
 
@@ -35,6 +36,7 @@ void MainWindow::setupDeviceView()
 
     connect(ui->screen, SIGNAL(currentChanged(int)), this, SLOT(startup(int)));
     connect(device, SIGNAL(batteryReduced()), this, SLOT(updateStatusBarGUI()));
+    connect(device, SIGNAL(powerSoftOff()), this, SLOT(softOff()));
     connect(device, SIGNAL(sessionFinished()), this, SLOT(sessionFinished()));
 
     // INPUT - buttons
@@ -161,6 +163,9 @@ void MainWindow::up()
         case HISTORY:
             upHelper(ui->histScreen);
             break;
+        case POWERING_OFF:
+            // do nothing
+            break;
         default:
             // do nothing
             break;
@@ -190,6 +195,7 @@ void MainWindow::upIntensity()
     // update GUI
     ui->sldrIntLeft->setValue(device->getSessionIntensity());
     ui->sldrIntRight->setValue(device->getSessionIntensity());
+    ui->lblInt->setText("Intensity: " + QString::number(device->getSessionIntensity()));
 }
 
 void MainWindow::down()
@@ -226,6 +232,9 @@ void MainWindow::down()
         case HISTORY:
             downHelper(ui->histScreen);
             break;
+        case POWERING_OFF:
+            // do nothing
+            break;
         default:
             // do nothing
             break;
@@ -254,6 +263,7 @@ void MainWindow::downIntensity()
     // update GUI
     ui->sldrIntLeft->setValue(device->getSessionIntensity());
     ui->sldrIntRight->setValue(device->getSessionIntensity());
+    ui->lblInt->setText("Intensity: " + QString::number(device->getSessionIntensity()));
 }
 
 void MainWindow::left()
@@ -279,8 +289,15 @@ void MainWindow::right()
 
 void MainWindow::returnMain()
 {
-    if (!device->isOn() || device->getCurrUser() == NULL) // can't return to main if device is off or no user is logged in
+    // return to main restrictions
+    if (!device->isOn())
     {
+        cout << "ERROR: unable to return to main menu, device is off" << endl;
+        return;
+    }
+    if (device->getCurrUser() == NULL)
+    {
+        cout << "ERROR: unable to return to main menu, no user selected" << endl;
         return;
     }
 
@@ -289,20 +306,39 @@ void MainWindow::returnMain()
 
 void MainWindow::record()
 {
-    // can't record session if device is off, no user is logged in, or not in a session that is either active or finished
-    if (!device->isOn() || device->getCurrUser() == NULL || ui->screen->currentIndex() != ACTIVE_SESSION || ui->screen->currentIndex() != FINISHED_SESSION)
+    // recording restrictions
+    if (!device->isOn())
     {
+        cout << "ERROR: unable to record, device is off" << endl;
+        return;
+    }
+    if (device->getCurrUser() == NULL)
+    {
+        cout << "ERROR: unable to record, no user selected" << endl;
+        return;
+    }
+    if (ui->screen->currentIndex() != ACTIVE_SESSION && ui->screen->currentIndex() != FINISHED_SESSION)
+    {
+        cout << "ERROR: unable to record, neither on the active or finished session screen" << endl;
         return;
     }
 
     device->getCurrUser()->updateHistory(device->getCurrSession());
+    cout << "session successfully recorded" << endl;
     updateHistory();
 }
 
 void MainWindow::history()
 {
-    if (!device->isOn() || device->getCurrUser() == NULL) // can't go to history if device is off or no user is logged in
+    // go to treatment history restrictions
+    if (!device->isOn())
     {
+        cout << "ERROR: unable to go to treatment history, device is off" << endl;
+        return;
+    }
+    if (device->getCurrUser() == NULL)
+    {
+        cout << "ERROR: unable to go to treatment history, no user selected" << endl;
         return;
     }
 
@@ -311,6 +347,11 @@ void MainWindow::history()
 
 void MainWindow::select()
 {
+    if (device->getBattery() == 0)
+    {
+        return;
+    }
+
     switch (ui->screen->currentIndex())
     {
         case OFF:
@@ -342,6 +383,9 @@ void MainWindow::select()
             break;
         case HISTORY:
             selectHistory();
+            break;
+        case POWERING_OFF:
+            // do nothing
             break;
         default:
             // do nothing
@@ -385,6 +429,7 @@ void MainWindow::selectMain()
             break;
         case CHANGE_USER:
             ui->screen->setCurrentIndex(USER);
+            device->setCurrentUser(NULL);
             break;
         default:
             break;
@@ -407,7 +452,8 @@ void MainWindow::selectType()
     ui->sldrIntLeft->setValue(1);
     ui->sldrIntRight->setValue(1);
     device->createSession();
-    device->runSession(device->getCurrSession());
+    device->runSession();
+    setSessionInfo();
 }
 
 void MainWindow::selectHistory()
@@ -421,35 +467,71 @@ void MainWindow::selectHistory()
     ui->screen->setCurrentIndex(ACTIVE_SESSION);
     ui->sldrIntLeft->setValue(device->getCurrSession()->getIntensity());
     ui->sldrIntRight->setValue(device->getCurrSession()->getIntensity());
-    device->runSession(device->getCurrSession());
+    device->runSession();
+
+    setSessionInfo();
+}
+
+void MainWindow::setSessionInfo()
+{
+    // group + time
+    switch (device->getSessionGroup())
+    {
+        case TWENTY_MINUTES:
+            ui->lblGroup->setText("Group: 20 mins");
+            break;
+        case FOURTY_FIVE_MINUTES:
+            ui->lblGroup->setText("Group: 45 mins");
+            break;
+        case USER_DESIGNATED:
+            ui->lblGroup->setText("Group: 60 mins");
+            break;
+        default:
+            break;
+    }
+
+    // type
+    switch (device->getSessionType())
+    {
+        case MET:
+            ui->lblType->setText("Type: MET");
+            break;
+        case DELTA:
+            ui->lblType->setText("Type: DELTA");
+            break;
+        case THETA:
+            ui->lblType->setText("Type: THETA");
+            break;
+        case ALPHA:
+            ui->lblType->setText("Type: ALPHA");
+            break;
+        default:
+            break;
+    }
+
+    // intensity
+    ui->lblInt->setText("Intensity: " + QString::number(device->getSessionIntensity()));
 }
 
 void MainWindow::togglePower()
 {
     if (device->isOn()) // turn device off
     {
-        ui->btnPower->setText("⭘");
-        ui->screen->setCurrentIndex(OFF);
-        device->setPowerOn(false);
+        if (ui->screen->currentIndex() == POWERING_OFF)
+        {
+            return;
+        }
 
-        // clear startup loading progress
-        ui->pbStartup->setValue(0);
-
-        // clear status bar
-        ui->statusBar->setMarkdown("");
-
-        // clear connection
-        device->setConnection(NONE);
-        ui->cboConn->setCurrentIndex(NONE);
-        ui->cboConn->setEnabled(false);
-
-        // clear current user
-        device->setCurrentUser(NULL);
-
-        resetCurrentRows();
+        softOff();
     }
     else // turn device on
     {
+        if (device->getBattery() == 0)
+        {
+            cout << "battery dead, unable to turn device on" << endl;
+            return;
+        }
+
         ui->btnPower->setText("I");
         ui->screen->setCurrentIndex(ON);
         device->setPowerOn(true);
@@ -458,6 +540,47 @@ void MainWindow::togglePower()
 
         updateStatusBarGUI();
     }
+}
+
+void MainWindow::softOff()
+{
+    cout << "initiating soft off..." << endl;
+
+    ui->screen->setCurrentIndex(POWERING_OFF);
+
+    // clear startup loading progress
+    delete timer;
+    timer = new QTimer(this);
+    ui->pbStartup->setValue(0);
+
+    // clear status bar
+    ui->statusBar->setMarkdown("");
+
+    // clear connection
+    device->setConnection(NONE);
+    ui->cboConn->setCurrentIndex(NONE);
+    ui->cboConn->setEnabled(false);
+
+    // clear current user
+    device->setCurrentUser(NULL);
+
+    resetCurrentRows();
+
+    // soft off sim
+    connect(timer, SIGNAL(timeout()), this, SLOT(softOffComplete()));
+    timer->start(4000);
+}
+
+void MainWindow::softOffComplete()
+{
+    ui->btnPower->setText("⭘");
+    ui->screen->setCurrentIndex(OFF);
+    device->setPowerOn(false);
+
+    delete timer;
+    timer = new QTimer(this);
+
+    cout << "...soft off complete" << endl;
 }
 
 void MainWindow::sessionFinished()
@@ -478,6 +601,21 @@ void MainWindow::updateBattery(int batt)
 
 void MainWindow::updateConnection(int c)
 {
+    if (ui->screen->currentIndex() == ACTIVE_SESSION) // pause and play session
+    {
+        if (c == NONE)
+        {
+            cout << "connection missing, pausing session" << endl;
+            device->pauseSession();
+        }
+
+        if (device->getConnection() == NONE && c != NONE)
+        {
+            cout << "connection recovered, continuing session" << endl;
+            device->continueSession();
+        }
+    }
+
     device->setConnection(c);
 
     if (device->isOn())

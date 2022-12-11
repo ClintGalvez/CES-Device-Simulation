@@ -11,7 +11,8 @@ typedef enum {
     TYPE,
     ACTIVE_SESSION,
     FINISHED_SESSION,
-    HISTORY
+    HISTORY,
+    POWERING_OFF
 } Screen;
 
 typedef enum {

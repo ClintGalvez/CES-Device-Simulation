@@ -90,13 +90,22 @@ public:
     QLabel *lblInt4;
     QLabel *lblInt3;
     QLabel *lblInt2;
-    QListWidget *activeSessScreen;
-    QLabel *lblTimer;
+    QTextBrowser *activeSessScreen;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *vlActSessInfo;
+    QLabel *lblGroup;
+    QLabel *lblType;
+    QLabel *lblInt;
+    QFrame *line;
+    QLabel *lblInfo;
+    QFrame *line_2;
     QWidget *pFinSessScreen;
     QTextBrowser *finSessScreen;
     QWidget *pHist;
     QTextBrowser *hdrHist;
     QListWidget *histScreen;
+    QWidget *pPoweringOff;
+    QTextBrowser *pwrOffScreen;
     QComboBox *cboConn;
     QLabel *lblConn;
     QMenuBar *menubar;
@@ -209,7 +218,7 @@ public:
         lControl->setFrameShadow(QFrame::Sunken);
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(60, 50, 291, 231));
+        verticalLayoutWidget->setGeometry(QRect(60, 50, 291, 241));
         screenLayout = new QVBoxLayout(verticalLayoutWidget);
         screenLayout->setObjectName("screenLayout");
         screenLayout->setContentsMargins(0, 0, 0, 0);
@@ -227,19 +236,19 @@ public:
         pOff->setObjectName("pOff");
         offScreen = new QTextBrowser(pOff);
         offScreen->setObjectName("offScreen");
-        offScreen->setGeometry(QRect(0, 0, 291, 191));
+        offScreen->setGeometry(QRect(0, 0, 291, 201));
         screen->addWidget(pOff);
         pOn = new QWidget();
         pOn->setObjectName("pOn");
         onScreen = new QTextBrowser(pOn);
         onScreen->setObjectName("onScreen");
-        onScreen->setGeometry(QRect(0, 0, 291, 191));
+        onScreen->setGeometry(QRect(0, 0, 291, 201));
         screen->addWidget(pOn);
         pStartup = new QWidget();
         pStartup->setObjectName("pStartup");
         startupScreen = new QTextBrowser(pStartup);
         startupScreen->setObjectName("startupScreen");
-        startupScreen->setGeometry(QRect(0, 0, 291, 191));
+        startupScreen->setGeometry(QRect(0, 0, 291, 201));
         pbStartup = new QProgressBar(pStartup);
         pbStartup->setObjectName("pbStartup");
         pbStartup->setGeometry(QRect(60, 100, 171, 23));
@@ -250,56 +259,56 @@ public:
         pUser->setObjectName("pUser");
         hdrUser = new QTextBrowser(pUser);
         hdrUser->setObjectName("hdrUser");
-        hdrUser->setGeometry(QRect(0, 0, 291, 191));
+        hdrUser->setGeometry(QRect(0, 0, 291, 201));
         userScreen = new QListWidget(pUser);
         new QListWidgetItem(userScreen);
         new QListWidgetItem(userScreen);
         userScreen->setObjectName("userScreen");
-        userScreen->setGeometry(QRect(0, 30, 291, 161));
+        userScreen->setGeometry(QRect(0, 30, 291, 171));
         screen->addWidget(pUser);
         pMain = new QWidget();
         pMain->setObjectName("pMain");
         hdrOptions = new QTextBrowser(pMain);
         hdrOptions->setObjectName("hdrOptions");
-        hdrOptions->setGeometry(QRect(0, 0, 291, 191));
+        hdrOptions->setGeometry(QRect(0, 0, 291, 201));
         mainScreen = new QListWidget(pMain);
         new QListWidgetItem(mainScreen);
         new QListWidgetItem(mainScreen);
         new QListWidgetItem(mainScreen);
         mainScreen->setObjectName("mainScreen");
-        mainScreen->setGeometry(QRect(0, 30, 291, 161));
+        mainScreen->setGeometry(QRect(0, 30, 291, 171));
         mainScreen->setMinimumSize(QSize(0, 0));
         screen->addWidget(pMain);
         pGroup = new QWidget();
         pGroup->setObjectName("pGroup");
         hdrGroup = new QTextBrowser(pGroup);
         hdrGroup->setObjectName("hdrGroup");
-        hdrGroup->setGeometry(QRect(0, 0, 291, 191));
+        hdrGroup->setGeometry(QRect(0, 0, 291, 201));
         groupScreen = new QListWidget(pGroup);
         new QListWidgetItem(groupScreen);
         new QListWidgetItem(groupScreen);
         new QListWidgetItem(groupScreen);
         groupScreen->setObjectName("groupScreen");
-        groupScreen->setGeometry(QRect(0, 30, 291, 161));
+        groupScreen->setGeometry(QRect(0, 30, 291, 171));
         screen->addWidget(pGroup);
         pType = new QWidget();
         pType->setObjectName("pType");
         hdrType = new QTextBrowser(pType);
         hdrType->setObjectName("hdrType");
-        hdrType->setGeometry(QRect(0, 0, 291, 191));
+        hdrType->setGeometry(QRect(0, 0, 291, 201));
         typeScreen = new QListWidget(pType);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         typeScreen->setObjectName("typeScreen");
-        typeScreen->setGeometry(QRect(0, 30, 291, 161));
+        typeScreen->setGeometry(QRect(0, 30, 291, 171));
         screen->addWidget(pType);
         pActvSess = new QWidget();
         pActvSess->setObjectName("pActvSess");
         sldrIntLeft = new QSlider(pActvSess);
         sldrIntLeft->setObjectName("sldrIntLeft");
-        sldrIntLeft->setGeometry(QRect(160, 10, 18, 160));
+        sldrIntLeft->setGeometry(QRect(10, 30, 18, 160));
         sldrIntLeft->setMinimum(1);
         sldrIntLeft->setMaximum(8);
         sldrIntLeft->setOrientation(Qt::Vertical);
@@ -307,11 +316,12 @@ public:
         sldrIntLeft->setTickInterval(1);
         lblIntTitle = new QLabel(pActvSess);
         lblIntTitle->setObjectName("lblIntTitle");
-        lblIntTitle->setGeometry(QRect(50, 80, 63, 20));
+        lblIntTitle->setGeometry(QRect(10, 10, 63, 20));
+        lblIntTitle->setTextFormat(Qt::MarkdownText);
         lblIntTitle->setAlignment(Qt::AlignCenter);
         sldrIntRight = new QSlider(pActvSess);
         sldrIntRight->setObjectName("sldrIntRight");
-        sldrIntRight->setGeometry(QRect(210, 10, 18, 160));
+        sldrIntRight->setGeometry(QRect(60, 30, 18, 160));
         sldrIntRight->setMinimum(1);
         sldrIntRight->setMaximum(8);
         sldrIntRight->setOrientation(Qt::Vertical);
@@ -319,43 +329,77 @@ public:
         sldrIntRight->setTickInterval(1);
         lblInt1 = new QLabel(pActvSess);
         lblInt1->setObjectName("lblInt1");
-        lblInt1->setGeometry(QRect(180, 150, 31, 20));
+        lblInt1->setGeometry(QRect(30, 170, 31, 20));
         lblInt1->setAlignment(Qt::AlignCenter);
         lblInt8 = new QLabel(pActvSess);
         lblInt8->setObjectName("lblInt8");
-        lblInt8->setGeometry(QRect(180, 10, 31, 20));
+        lblInt8->setGeometry(QRect(30, 30, 31, 20));
         lblInt8->setAlignment(Qt::AlignCenter);
         lblInt7 = new QLabel(pActvSess);
         lblInt7->setObjectName("lblInt7");
-        lblInt7->setGeometry(QRect(180, 30, 31, 20));
+        lblInt7->setGeometry(QRect(30, 50, 31, 20));
         lblInt7->setAlignment(Qt::AlignCenter);
         lblInt6 = new QLabel(pActvSess);
         lblInt6->setObjectName("lblInt6");
-        lblInt6->setGeometry(QRect(180, 50, 31, 20));
+        lblInt6->setGeometry(QRect(30, 70, 31, 20));
         lblInt6->setAlignment(Qt::AlignCenter);
         lblInt5 = new QLabel(pActvSess);
         lblInt5->setObjectName("lblInt5");
-        lblInt5->setGeometry(QRect(180, 70, 31, 20));
+        lblInt5->setGeometry(QRect(30, 90, 31, 20));
         lblInt5->setAlignment(Qt::AlignCenter);
         lblInt4 = new QLabel(pActvSess);
         lblInt4->setObjectName("lblInt4");
-        lblInt4->setGeometry(QRect(180, 90, 31, 20));
+        lblInt4->setGeometry(QRect(30, 110, 31, 20));
         lblInt4->setAlignment(Qt::AlignCenter);
         lblInt3 = new QLabel(pActvSess);
         lblInt3->setObjectName("lblInt3");
-        lblInt3->setGeometry(QRect(180, 110, 31, 20));
+        lblInt3->setGeometry(QRect(30, 130, 31, 20));
         lblInt3->setAlignment(Qt::AlignCenter);
         lblInt2 = new QLabel(pActvSess);
         lblInt2->setObjectName("lblInt2");
-        lblInt2->setGeometry(QRect(180, 130, 31, 20));
+        lblInt2->setGeometry(QRect(30, 150, 31, 20));
         lblInt2->setAlignment(Qt::AlignCenter);
-        activeSessScreen = new QListWidget(pActvSess);
+        activeSessScreen = new QTextBrowser(pActvSess);
         activeSessScreen->setObjectName("activeSessScreen");
-        activeSessScreen->setGeometry(QRect(0, 0, 291, 191));
-        lblTimer = new QLabel(pActvSess);
-        lblTimer->setObjectName("lblTimer");
-        lblTimer->setGeometry(QRect(20, 50, 131, 20));
-        lblTimer->setAlignment(Qt::AlignCenter);
+        activeSessScreen->setGeometry(QRect(0, 0, 291, 201));
+        verticalLayoutWidget_2 = new QWidget(pActvSess);
+        verticalLayoutWidget_2->setObjectName("verticalLayoutWidget_2");
+        verticalLayoutWidget_2->setGeometry(QRect(140, 50, 141, 81));
+        vlActSessInfo = new QVBoxLayout(verticalLayoutWidget_2);
+        vlActSessInfo->setObjectName("vlActSessInfo");
+        vlActSessInfo->setContentsMargins(0, 0, 0, 0);
+        lblGroup = new QLabel(verticalLayoutWidget_2);
+        lblGroup->setObjectName("lblGroup");
+        lblGroup->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        vlActSessInfo->addWidget(lblGroup);
+
+        lblType = new QLabel(verticalLayoutWidget_2);
+        lblType->setObjectName("lblType");
+        lblType->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        vlActSessInfo->addWidget(lblType);
+
+        lblInt = new QLabel(verticalLayoutWidget_2);
+        lblInt->setObjectName("lblInt");
+        lblInt->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        vlActSessInfo->addWidget(lblInt);
+
+        line = new QFrame(pActvSess);
+        line->setObjectName("line");
+        line->setGeometry(QRect(100, 30, 20, 161));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        lblInfo = new QLabel(pActvSess);
+        lblInfo->setObjectName("lblInfo");
+        lblInfo->setGeometry(QRect(130, 25, 139, 21));
+        lblInfo->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        line_2 = new QFrame(pActvSess);
+        line_2->setObjectName("line_2");
+        line_2->setGeometry(QRect(210, 30, 71, 21));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
         screen->addWidget(pActvSess);
         activeSessScreen->raise();
         sldrIntLeft->raise();
@@ -369,22 +413,31 @@ public:
         lblInt4->raise();
         lblInt3->raise();
         lblInt2->raise();
-        lblTimer->raise();
+        verticalLayoutWidget_2->raise();
+        line->raise();
+        lblInfo->raise();
+        line_2->raise();
         pFinSessScreen = new QWidget();
         pFinSessScreen->setObjectName("pFinSessScreen");
         finSessScreen = new QTextBrowser(pFinSessScreen);
         finSessScreen->setObjectName("finSessScreen");
-        finSessScreen->setGeometry(QRect(0, 0, 291, 191));
+        finSessScreen->setGeometry(QRect(0, 0, 291, 201));
         screen->addWidget(pFinSessScreen);
         pHist = new QWidget();
         pHist->setObjectName("pHist");
         hdrHist = new QTextBrowser(pHist);
         hdrHist->setObjectName("hdrHist");
-        hdrHist->setGeometry(QRect(0, 0, 291, 191));
+        hdrHist->setGeometry(QRect(0, 0, 291, 201));
         histScreen = new QListWidget(pHist);
         histScreen->setObjectName("histScreen");
-        histScreen->setGeometry(QRect(0, 30, 291, 161));
+        histScreen->setGeometry(QRect(0, 30, 291, 171));
         screen->addWidget(pHist);
+        pPoweringOff = new QWidget();
+        pPoweringOff->setObjectName("pPoweringOff");
+        pwrOffScreen = new QTextBrowser(pPoweringOff);
+        pwrOffScreen->setObjectName("pwrOffScreen");
+        pwrOffScreen->setGeometry(QRect(0, 0, 291, 201));
+        screen->addWidget(pPoweringOff);
 
         screenLayout->addWidget(screen);
 
@@ -541,7 +594,7 @@ public:
         ___qlistwidgetitem11->setText(QCoreApplication::translate("MainWindow", "Alpha", nullptr));
         typeScreen->setSortingEnabled(__sortingEnabled3);
 
-        lblIntTitle->setText(QCoreApplication::translate("MainWindow", "Intensity:", nullptr));
+        lblIntTitle->setText(QCoreApplication::translate("MainWindow", "Intensity", nullptr));
         lblInt1->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
         lblInt8->setText(QCoreApplication::translate("MainWindow", "8", nullptr));
         lblInt7->setText(QCoreApplication::translate("MainWindow", "7", nullptr));
@@ -550,7 +603,16 @@ public:
         lblInt4->setText(QCoreApplication::translate("MainWindow", "4", nullptr));
         lblInt3->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
         lblInt2->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
-        lblTimer->setText(QCoreApplication::translate("MainWindow", "Time Left: x mins", nullptr));
+        activeSessScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">ACTIVE SESSION</span></p></body></html>", nullptr));
+        lblGroup->setText(QCoreApplication::translate("MainWindow", "Group: ", nullptr));
+        lblType->setText(QCoreApplication::translate("MainWindow", "Type: ", nullptr));
+        lblInt->setText(QCoreApplication::translate("MainWindow", "Intensity: ", nullptr));
+        lblInfo->setText(QCoreApplication::translate("MainWindow", "Session Info", nullptr));
         finSessScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -569,6 +631,17 @@ public:
 "hr { height: 1px; border-width: 0; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">TREATMENT HISTORY</span></p></body></html>", nullptr));
+        pwrOffScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0"
+                        "px;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; color:#00aaff;\">POWERING OFF...</span></p></body></html>", nullptr));
         cboConn->setItemText(0, QCoreApplication::translate("MainWindow", "None", nullptr));
         cboConn->setItemText(1, QCoreApplication::translate("MainWindow", "Okay", nullptr));
         cboConn->setItemText(2, QCoreApplication::translate("MainWindow", "Excellent", nullptr));
