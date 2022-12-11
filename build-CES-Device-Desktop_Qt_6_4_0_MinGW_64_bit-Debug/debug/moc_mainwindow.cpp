@@ -26,44 +26,52 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MainWindow_t {
-    uint offsetsAndSizes[28];
+    uint offsetsAndSizes[34];
     char stringdata0[11];
-    char stringdata1[3];
+    char stringdata1[8];
     char stringdata2[1];
-    char stringdata3[5];
-    char stringdata4[5];
-    char stringdata5[6];
-    char stringdata6[11];
-    char stringdata7[7];
-    char stringdata8[8];
+    char stringdata3[12];
+    char stringdata4[3];
+    char stringdata5[5];
+    char stringdata6[5];
+    char stringdata7[6];
+    char stringdata8[11];
     char stringdata9[7];
-    char stringdata10[12];
-    char stringdata11[14];
-    char stringdata12[17];
-    char stringdata13[19];
+    char stringdata10[8];
+    char stringdata11[7];
+    char stringdata12[12];
+    char stringdata13[16];
+    char stringdata14[14];
+    char stringdata15[17];
+    char stringdata16[19];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MainWindow_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
         QT_MOC_LITERAL(0, 10),  // "MainWindow"
-        QT_MOC_LITERAL(11, 2),  // "up"
-        QT_MOC_LITERAL(14, 0),  // ""
-        QT_MOC_LITERAL(15, 4),  // "down"
-        QT_MOC_LITERAL(20, 4),  // "left"
-        QT_MOC_LITERAL(25, 5),  // "right"
-        QT_MOC_LITERAL(31, 10),  // "returnMain"
-        QT_MOC_LITERAL(42, 6),  // "record"
-        QT_MOC_LITERAL(49, 7),  // "history"
-        QT_MOC_LITERAL(57, 6),  // "select"
-        QT_MOC_LITERAL(64, 11),  // "togglePower"
-        QT_MOC_LITERAL(76, 13),  // "updateBattery"
-        QT_MOC_LITERAL(90, 16),  // "updateConnection"
-        QT_MOC_LITERAL(107, 18)   // "updateStatusBarGUI"
+        QT_MOC_LITERAL(11, 7),  // "startup"
+        QT_MOC_LITERAL(19, 0),  // ""
+        QT_MOC_LITERAL(20, 11),  // "loadStartup"
+        QT_MOC_LITERAL(32, 2),  // "up"
+        QT_MOC_LITERAL(35, 4),  // "down"
+        QT_MOC_LITERAL(40, 4),  // "left"
+        QT_MOC_LITERAL(45, 5),  // "right"
+        QT_MOC_LITERAL(51, 10),  // "returnMain"
+        QT_MOC_LITERAL(62, 6),  // "record"
+        QT_MOC_LITERAL(69, 7),  // "history"
+        QT_MOC_LITERAL(77, 6),  // "select"
+        QT_MOC_LITERAL(84, 11),  // "togglePower"
+        QT_MOC_LITERAL(96, 15),  // "sessionFinished"
+        QT_MOC_LITERAL(112, 13),  // "updateBattery"
+        QT_MOC_LITERAL(126, 16),  // "updateConnection"
+        QT_MOC_LITERAL(143, 18)   // "updateStatusBarGUI"
     },
     "MainWindow",
-    "up",
+    "startup",
     "",
+    "loadStartup",
+    "up",
     "down",
     "left",
     "right",
@@ -72,6 +80,7 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
     "history",
     "select",
     "togglePower",
+    "sessionFinished",
     "updateBattery",
     "updateConnection",
     "updateStatusBarGUI"
@@ -85,7 +94,7 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -93,20 +102,26 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   86,    2, 0x0a,    1 /* Public */,
-       3,    0,   87,    2, 0x0a,    2 /* Public */,
-       4,    0,   88,    2, 0x0a,    3 /* Public */,
-       5,    0,   89,    2, 0x0a,    4 /* Public */,
-       6,    0,   90,    2, 0x0a,    5 /* Public */,
-       7,    0,   91,    2, 0x0a,    6 /* Public */,
-       8,    0,   92,    2, 0x0a,    7 /* Public */,
-       9,    0,   93,    2, 0x0a,    8 /* Public */,
-      10,    0,   94,    2, 0x0a,    9 /* Public */,
-      11,    1,   95,    2, 0x0a,   10 /* Public */,
-      12,    1,   98,    2, 0x0a,   12 /* Public */,
-      13,    0,  101,    2, 0x0a,   14 /* Public */,
+       1,    1,  104,    2, 0x0a,    1 /* Public */,
+       3,    0,  107,    2, 0x0a,    3 /* Public */,
+       4,    0,  108,    2, 0x0a,    4 /* Public */,
+       5,    0,  109,    2, 0x0a,    5 /* Public */,
+       6,    0,  110,    2, 0x0a,    6 /* Public */,
+       7,    0,  111,    2, 0x0a,    7 /* Public */,
+       8,    0,  112,    2, 0x0a,    8 /* Public */,
+       9,    0,  113,    2, 0x0a,    9 /* Public */,
+      10,    0,  114,    2, 0x0a,   10 /* Public */,
+      11,    0,  115,    2, 0x0a,   11 /* Public */,
+      12,    0,  116,    2, 0x0a,   12 /* Public */,
+      13,    0,  117,    2, 0x0a,   13 /* Public */,
+      14,    1,  118,    2, 0x0a,   14 /* Public */,
+      15,    1,  121,    2, 0x0a,   16 /* Public */,
+      16,    0,  124,    2, 0x0a,   18 /* Public */,
 
  // slots: parameters
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -132,6 +147,11 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
+        // method 'startup'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'loadStartup'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'up'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'down'
@@ -149,6 +169,8 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'select'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'togglePower'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'sessionFinished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateBattery'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -168,18 +190,21 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->up(); break;
-        case 1: _t->down(); break;
-        case 2: _t->left(); break;
-        case 3: _t->right(); break;
-        case 4: _t->returnMain(); break;
-        case 5: _t->record(); break;
-        case 6: _t->history(); break;
-        case 7: _t->select(); break;
-        case 8: _t->togglePower(); break;
-        case 9: _t->updateBattery((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 10: _t->updateConnection((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 11: _t->updateStatusBarGUI(); break;
+        case 0: _t->startup((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 1: _t->loadStartup(); break;
+        case 2: _t->up(); break;
+        case 3: _t->down(); break;
+        case 4: _t->left(); break;
+        case 5: _t->right(); break;
+        case 6: _t->returnMain(); break;
+        case 7: _t->record(); break;
+        case 8: _t->history(); break;
+        case 9: _t->select(); break;
+        case 10: _t->togglePower(); break;
+        case 11: _t->sessionFinished(); break;
+        case 12: _t->updateBattery((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 13: _t->updateConnection((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 14: _t->updateStatusBarGUI(); break;
         default: ;
         }
     }
@@ -204,13 +229,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 15)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 12;
+        _id -= 15;
     }
     return _id;
 }

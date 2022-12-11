@@ -5,6 +5,8 @@
 #include <QListWidget>
 
 #include <iostream>
+#include <QTimer>
+#include <QRandomGenerator>
 
 #include "device.h"
 
@@ -48,11 +50,15 @@ class MainWindow : public QMainWindow
         Ui::MainWindow *ui;
 
         Device *device;
+        QTimer *timer;
 
     signals:
         //
 
     public slots:
+        void startup(int);
+        void loadStartup();
+
         void up();
         void down();
         void left();
@@ -63,6 +69,8 @@ class MainWindow : public QMainWindow
         void history();
         void select();
         void togglePower();
+
+        void sessionFinished();
 
         void updateBattery(int);
         void updateConnection(int);

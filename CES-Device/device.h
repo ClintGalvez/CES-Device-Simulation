@@ -61,6 +61,7 @@ class Device : public QObject
 
     signals:
         void batteryReduced();
+        void sessionFinished();
 
     public slots:
         void setBattery(int);

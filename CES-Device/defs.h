@@ -3,11 +3,14 @@
 
 typedef enum {
     OFF,
+    ON,
+    STARTUP,
     USER,
     MAIN,
     GROUP,
     TYPE,
     ACTIVE_SESSION,
+    FINISHED_SESSION,
     HISTORY
 } Screen;
 

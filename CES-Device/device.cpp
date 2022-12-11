@@ -183,7 +183,7 @@ void Device::reduceBattery()
 {
     // prob find a bettery reduction algorithm, but prob no need to
     // *project specs say to include skin connection into this algorithm somehow (??)
-    battery -= 2 * currSession->getIntensity();
+    battery -= 2 * currSession->getIntensity() + connection;
     emit batteryReduced();
 }
 
@@ -194,7 +194,8 @@ void Device::endSession()
 
     // end of session should have the intensity level go down each level until nothing is outputted
     // *note* look through project docs to see if additional things need to be added
-    // maybe make and endSession function or whatever
+
+    emit sessionFinished();
 }
 
 void Device::updateHistory(Session *ses)

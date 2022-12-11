@@ -18,6 +18,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
@@ -60,13 +61,22 @@ public:
     QStackedWidget *screen;
     QWidget *pOff;
     QTextBrowser *offScreen;
+    QWidget *pOn;
+    QTextBrowser *onScreen;
+    QWidget *pStartup;
+    QTextBrowser *startupScreen;
+    QProgressBar *pbStartup;
     QWidget *pUser;
+    QTextBrowser *hdrUser;
     QListWidget *userScreen;
     QWidget *pMain;
+    QTextBrowser *hdrOptions;
     QListWidget *mainScreen;
     QWidget *pGroup;
+    QTextBrowser *hdrGroup;
     QListWidget *groupScreen;
     QWidget *pType;
+    QTextBrowser *hdrType;
     QListWidget *typeScreen;
     QWidget *pActvSess;
     QSlider *sldrIntLeft;
@@ -81,7 +91,11 @@ public:
     QLabel *lblInt3;
     QLabel *lblInt2;
     QListWidget *activeSessScreen;
+    QLabel *lblTimer;
+    QWidget *pFinSessScreen;
+    QTextBrowser *finSessScreen;
     QWidget *pHist;
+    QTextBrowser *hdrHist;
     QListWidget *histScreen;
     QComboBox *cboConn;
     QLabel *lblConn;
@@ -215,42 +229,71 @@ public:
         offScreen->setObjectName("offScreen");
         offScreen->setGeometry(QRect(0, 0, 291, 191));
         screen->addWidget(pOff);
+        pOn = new QWidget();
+        pOn->setObjectName("pOn");
+        onScreen = new QTextBrowser(pOn);
+        onScreen->setObjectName("onScreen");
+        onScreen->setGeometry(QRect(0, 0, 291, 191));
+        screen->addWidget(pOn);
+        pStartup = new QWidget();
+        pStartup->setObjectName("pStartup");
+        startupScreen = new QTextBrowser(pStartup);
+        startupScreen->setObjectName("startupScreen");
+        startupScreen->setGeometry(QRect(0, 0, 291, 191));
+        pbStartup = new QProgressBar(pStartup);
+        pbStartup->setObjectName("pbStartup");
+        pbStartup->setGeometry(QRect(60, 100, 171, 23));
+        pbStartup->setValue(0);
+        pbStartup->setTextVisible(false);
+        screen->addWidget(pStartup);
         pUser = new QWidget();
         pUser->setObjectName("pUser");
+        hdrUser = new QTextBrowser(pUser);
+        hdrUser->setObjectName("hdrUser");
+        hdrUser->setGeometry(QRect(0, 0, 291, 191));
         userScreen = new QListWidget(pUser);
         new QListWidgetItem(userScreen);
         new QListWidgetItem(userScreen);
         userScreen->setObjectName("userScreen");
-        userScreen->setGeometry(QRect(0, 0, 291, 191));
+        userScreen->setGeometry(QRect(0, 30, 291, 161));
         screen->addWidget(pUser);
         pMain = new QWidget();
         pMain->setObjectName("pMain");
+        hdrOptions = new QTextBrowser(pMain);
+        hdrOptions->setObjectName("hdrOptions");
+        hdrOptions->setGeometry(QRect(0, 0, 291, 191));
         mainScreen = new QListWidget(pMain);
         new QListWidgetItem(mainScreen);
         new QListWidgetItem(mainScreen);
         new QListWidgetItem(mainScreen);
         mainScreen->setObjectName("mainScreen");
-        mainScreen->setGeometry(QRect(0, 0, 291, 191));
-        mainScreen->setMinimumSize(QSize(0, 191));
+        mainScreen->setGeometry(QRect(0, 30, 291, 161));
+        mainScreen->setMinimumSize(QSize(0, 0));
         screen->addWidget(pMain);
         pGroup = new QWidget();
         pGroup->setObjectName("pGroup");
+        hdrGroup = new QTextBrowser(pGroup);
+        hdrGroup->setObjectName("hdrGroup");
+        hdrGroup->setGeometry(QRect(0, 0, 291, 191));
         groupScreen = new QListWidget(pGroup);
         new QListWidgetItem(groupScreen);
         new QListWidgetItem(groupScreen);
         new QListWidgetItem(groupScreen);
         groupScreen->setObjectName("groupScreen");
-        groupScreen->setGeometry(QRect(0, 0, 291, 191));
+        groupScreen->setGeometry(QRect(0, 30, 291, 161));
         screen->addWidget(pGroup);
         pType = new QWidget();
         pType->setObjectName("pType");
+        hdrType = new QTextBrowser(pType);
+        hdrType->setObjectName("hdrType");
+        hdrType->setGeometry(QRect(0, 0, 291, 191));
         typeScreen = new QListWidget(pType);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         new QListWidgetItem(typeScreen);
         typeScreen->setObjectName("typeScreen");
-        typeScreen->setGeometry(QRect(0, 0, 291, 191));
+        typeScreen->setGeometry(QRect(0, 30, 291, 161));
         screen->addWidget(pType);
         pActvSess = new QWidget();
         pActvSess->setObjectName("pActvSess");
@@ -309,6 +352,10 @@ public:
         activeSessScreen = new QListWidget(pActvSess);
         activeSessScreen->setObjectName("activeSessScreen");
         activeSessScreen->setGeometry(QRect(0, 0, 291, 191));
+        lblTimer = new QLabel(pActvSess);
+        lblTimer->setObjectName("lblTimer");
+        lblTimer->setGeometry(QRect(20, 50, 131, 20));
+        lblTimer->setAlignment(Qt::AlignCenter);
         screen->addWidget(pActvSess);
         activeSessScreen->raise();
         sldrIntLeft->raise();
@@ -322,11 +369,21 @@ public:
         lblInt4->raise();
         lblInt3->raise();
         lblInt2->raise();
+        lblTimer->raise();
+        pFinSessScreen = new QWidget();
+        pFinSessScreen->setObjectName("pFinSessScreen");
+        finSessScreen = new QTextBrowser(pFinSessScreen);
+        finSessScreen->setObjectName("finSessScreen");
+        finSessScreen->setGeometry(QRect(0, 0, 291, 191));
+        screen->addWidget(pFinSessScreen);
         pHist = new QWidget();
         pHist->setObjectName("pHist");
+        hdrHist = new QTextBrowser(pHist);
+        hdrHist->setObjectName("hdrHist");
+        hdrHist->setGeometry(QRect(0, 0, 291, 191));
         histScreen = new QListWidget(pHist);
         histScreen->setObjectName("histScreen");
-        histScreen->setGeometry(QRect(0, 0, 291, 191));
+        histScreen->setGeometry(QRect(0, 30, 291, 161));
         screen->addWidget(pHist);
 
         screenLayout->addWidget(screen);
@@ -382,8 +439,19 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">CONN: NONE | BATT: 100%</span></p></body></html>", nullptr));
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:700; color:#585858;\">CONN: NONE | BATT: 100%</span></p></body></html>", nullptr));
         offScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#585858;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; color:#585858;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt"
+                        "-block-indent:0; text-indent:0px; color:#585858;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; color:#585858;\">POWER OFF</span></p></body></html>", nullptr));
+        onScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -393,7 +461,24 @@ public:
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0"
                         "px;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">Power Off</span></p></body></html>", nullptr));
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; color:#00aaff;\">OASIS PRO</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7pt; font-weight:700; color:#00aaff;\">- PRESS OK TO START -</span></p></body></html>", nullptr));
+        startupScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><s"
+                        "pan style=\" font-size:14pt; font-weight:700; color:#00aaff;\">LOADING...</span></p></body></html>", nullptr));
+        hdrUser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">SELECT A USER</span></p></body></html>", nullptr));
 
         const bool __sortingEnabled = userScreen->isSortingEnabled();
         userScreen->setSortingEnabled(false);
@@ -403,6 +488,12 @@ public:
         ___qlistwidgetitem1->setText(QCoreApplication::translate("MainWindow", "Add User", nullptr));
         userScreen->setSortingEnabled(__sortingEnabled);
 
+        hdrOptions->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">OPTIONS</span></p></body></html>", nullptr));
 
         const bool __sortingEnabled1 = mainScreen->isSortingEnabled();
         mainScreen->setSortingEnabled(false);
@@ -414,6 +505,12 @@ public:
         ___qlistwidgetitem4->setText(QCoreApplication::translate("MainWindow", "Change User", nullptr));
         mainScreen->setSortingEnabled(__sortingEnabled1);
 
+        hdrGroup->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">SELECT GROUP</span></p></body></html>", nullptr));
 
         const bool __sortingEnabled2 = groupScreen->isSortingEnabled();
         groupScreen->setSortingEnabled(false);
@@ -425,6 +522,12 @@ public:
         ___qlistwidgetitem7->setText(QCoreApplication::translate("MainWindow", "User Designated", nullptr));
         groupScreen->setSortingEnabled(__sortingEnabled2);
 
+        hdrType->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">SELECT TYPE</span></p></body></html>", nullptr));
 
         const bool __sortingEnabled3 = typeScreen->isSortingEnabled();
         typeScreen->setSortingEnabled(false);
@@ -447,6 +550,25 @@ public:
         lblInt4->setText(QCoreApplication::translate("MainWindow", "4", nullptr));
         lblInt3->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
         lblInt2->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
+        lblTimer->setText(QCoreApplication::translate("MainWindow", "Time Left: x mins", nullptr));
+        finSessScreen->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0"
+                        "px;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:700; color:#00aaff;\">SESSION FINISHED</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:700; color:#00aaff;\">- PRESS OK -</span></p></body></html>", nullptr));
+        hdrHist->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#00aaff;\">TREATMENT HISTORY</span></p></body></html>", nullptr));
         cboConn->setItemText(0, QCoreApplication::translate("MainWindow", "None", nullptr));
         cboConn->setItemText(1, QCoreApplication::translate("MainWindow", "Okay", nullptr));
         cboConn->setItemText(2, QCoreApplication::translate("MainWindow", "Excellent", nullptr));

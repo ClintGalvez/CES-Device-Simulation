@@ -3,7 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow), timer(new QTimer(this))
 {
     ui->setupUi(this);
 
@@ -33,7 +33,9 @@ void MainWindow::setupDeviceView()
 
     resetCurrentRows();
 
+    connect(ui->screen, SIGNAL(currentChanged(int)), this, SLOT(startup(int)));
     connect(device, SIGNAL(batteryReduced()), this, SLOT(updateStatusBarGUI()));
+    connect(device, SIGNAL(sessionFinished()), this, SLOT(sessionFinished()));
 
     // INPUT - buttons
     ui->btnRet->setIcon(QIcon(":/CES-Device/images/power.png"));
@@ -82,11 +84,60 @@ void MainWindow::setupDebugView()
 }
 
 
+void MainWindow::startup(int curr)
+{
+    if (curr != STARTUP)
+    {
+        return;
+    }
+
+    // simulate startup loading
+    connect(timer, SIGNAL(timeout()), this, SLOT(loadStartup()));
+    timer->start(500);
+}
+
+void MainWindow::loadStartup()
+{
+    // progress startup loading
+    int lowBound = 3;
+    int upBound = 10;
+    int progress = ui->pbStartup->value() + (QRandomGenerator::global()->generate() % ((upBound + 1) - lowBound) + lowBound);
+
+    // cap load progress value at 100
+    if (progress >= 100)
+    {
+        progress = 100;
+    }
+
+    // update startup loading progress
+    ui->pbStartup->setValue(progress);
+
+    // check if load progress is complete (ie. 100)
+    if (ui->pbStartup->value() != 100)
+    {
+        return;
+    }
+
+    // finished loading simulation
+    delete timer;
+    timer = new QTimer(this);
+
+    // go to user select screen
+    ui->screen->setCurrentIndex(USER);
+}
+
+
 void MainWindow::up()
 {
     switch (ui->screen->currentIndex())
     {
         case OFF:
+            // do nothing
+            break;
+        case ON:
+            // do nothing
+            break;
+        case STARTUP:
             // do nothing
             break;
         case USER:
@@ -103,6 +154,9 @@ void MainWindow::up()
             break;
         case ACTIVE_SESSION:
             upIntensity();
+            break;
+        case FINISHED_SESSION:
+            // do nothing
             break;
         case HISTORY:
             upHelper(ui->histScreen);
@@ -145,6 +199,12 @@ void MainWindow::down()
         case OFF:
             // do nothing
             break;
+        case ON:
+            // do nothing
+            break;
+        case STARTUP:
+            // do nothing
+            break;
         case USER:
             downHelper(ui->userScreen);
             break;
@@ -159,6 +219,9 @@ void MainWindow::down()
             break;
         case ACTIVE_SESSION:
             downIntensity();
+            break;
+        case FINISHED_SESSION:
+            // do nothing
             break;
         case HISTORY:
             downHelper(ui->histScreen);
@@ -226,7 +289,8 @@ void MainWindow::returnMain()
 
 void MainWindow::record()
 {
-    if (!device->isOn() || device->getCurrUser() == NULL || ui->screen->currentIndex() != ACTIVE_SESSION) // can't record session if device is off, no user is logged in, or not in a session
+    // can't record session if device is off, no user is logged in, or not in a session that is either active or finished
+    if (!device->isOn() || device->getCurrUser() == NULL || ui->screen->currentIndex() != ACTIVE_SESSION || ui->screen->currentIndex() != FINISHED_SESSION)
     {
         return;
     }
@@ -252,6 +316,12 @@ void MainWindow::select()
         case OFF:
             // do nothing
             break;
+        case ON:
+            ui->screen->setCurrentIndex(STARTUP);
+            break;
+        case STARTUP:
+            // do nothing
+            break;
         case USER:
             selectUser();
             break;
@@ -266,6 +336,9 @@ void MainWindow::select()
             break;
         case ACTIVE_SESSION:
             // do nothing (only up and down buttons should be needed)
+            break;
+        case FINISHED_SESSION:
+            ui->screen->setCurrentIndex(MAIN);
             break;
         case HISTORY:
             selectHistory();
@@ -359,6 +432,9 @@ void MainWindow::togglePower()
         ui->screen->setCurrentIndex(OFF);
         device->setPowerOn(false);
 
+        // clear startup loading progress
+        ui->pbStartup->setValue(0);
+
         // clear status bar
         ui->statusBar->setMarkdown("");
 
@@ -375,13 +451,18 @@ void MainWindow::togglePower()
     else // turn device on
     {
         ui->btnPower->setText("I");
-        ui->screen->setCurrentIndex(USER);
+        ui->screen->setCurrentIndex(ON);
         device->setPowerOn(true);
 
         ui->cboConn->setEnabled(true);
 
         updateStatusBarGUI();
     }
+}
+
+void MainWindow::sessionFinished()
+{
+    ui->screen->setCurrentIndex(FINISHED_SESSION);
 }
 
 
@@ -429,7 +510,6 @@ void MainWindow::updateStatusBarGUI()
     ui->sldrBattery->setValue(device->getBattery());
 }
 
-
 void MainWindow::resetCurrentRows()
 {
     ui->userScreen->setCurrentRow(0);
@@ -459,6 +539,7 @@ void MainWindow::updateHistory()
     // start at the newest added
     ui->histScreen->setCurrentRow(0);
 }
+
 
 QString MainWindow::groupToString(SessionGroup g)
 {
