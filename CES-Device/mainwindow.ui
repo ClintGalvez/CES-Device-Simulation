@@ -292,7 +292,7 @@ hr { height: 1px; border-width: 0; }
         </size>
        </property>
        <property name="currentIndex">
-        <number>7</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="pOff">
         <widget class="QTextBrowser" name="offScreen">
