@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../CES-Device/session.h"
+#include "C:/Users/croso/Downloads/team51/3004-Team-51/CES-Device/session.h"
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'session.h' doesn't include <QObject>."

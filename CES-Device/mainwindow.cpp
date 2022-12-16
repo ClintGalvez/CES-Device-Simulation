@@ -30,7 +30,7 @@ void MainWindow::setupDeviceView()
     ui->statusBar->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->screen->setAttribute(Qt::WA_TransparentForMouseEvents); // this means every child of screen is also transparent for mouse events
 
-    ui->statusBar->setMarkdown("");
+    ui->statusBar->setText("");
 
     resetCurrentRows();
 
@@ -554,7 +554,7 @@ void MainWindow::softOff()
     ui->pbStartup->setValue(0);
 
     // clear status bar
-    ui->statusBar->setMarkdown("");
+    ui->statusBar->setText("");
 
     // clear connection
     device->setConnection(NONE);
@@ -631,13 +631,13 @@ void MainWindow::updateStatusBarGUI()
     switch (device->getConnection())
     {
         case NONE:
-            ui->statusBar->setMarkdown("CONN: NONE | BATT: " + QString::number(device->getBattery()) + "%");
+            ui->statusBar->setText("CONN: NONE | BATT: " + QString::number(device->getBattery()) + "%");
             break;
         case OKAY:
-            ui->statusBar->setMarkdown("CONN: OKAY | BATT: " + QString::number(device->getBattery()) + "%");
+            ui->statusBar->setText("CONN: OKAY | BATT: " + QString::number(device->getBattery()) + "%");
             break;
         case EXCELLENT:
-            ui->statusBar->setMarkdown("CONN: EXCELLENT | BATT: " + QString::number(device->getBattery()) + "%");
+            ui->statusBar->setText("CONN: EXCELLENT | BATT: " + QString::number(device->getBattery()) + "%");
             break;
         default:
             break;

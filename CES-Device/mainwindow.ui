@@ -292,7 +292,7 @@ hr { height: 1px; border-width: 0; }
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>7</number>
        </property>
        <widget class="QWidget" name="pOff">
         <widget class="QTextBrowser" name="offScreen">
@@ -605,9 +605,6 @@ hr { height: 1px; border-width: 0; }
          </property>
          <property name="text">
           <string>Intensity</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::MarkdownText</enum>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
